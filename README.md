@@ -203,7 +203,7 @@ self.textView.widthAnchor.constraint(equalToConstant: 300).isActive = true
 self.textView.heightAnchor.constraint(greaterThanOrEqualTo: 70).isActive = true
 ```
 
-### TextViewView
+### TextView
 
 ### Usage
 
@@ -231,7 +231,7 @@ Parameters:
 @FocusState private var isFocused: Bool
 
  var body: some View {
-        TextViewView(
+        TextView(
             "Placeholder",
             text: self.$text,
             theme: self.theme,

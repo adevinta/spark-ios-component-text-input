@@ -19,7 +19,7 @@ public final class TextFieldUIView: UITextField {
     private let viewModel: TextInputViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    @ScaledUIMetric private var height: CGFloat = 44
+    @ScaledUIMetric private var height: CGFloat = TextInputConstants.height
     @ScaledUIMetric private var scaleFactor: CGFloat = 1.0
 
     private let defaultClearButtonRightSpacing = 5.0
@@ -38,7 +38,7 @@ public final class TextFieldUIView: UITextField {
 
     public override var isUserInteractionEnabled: Bool {
         didSet {
-            self.viewModel.isUserInteractionEnabled = self.isUserInteractionEnabled
+            self.viewModel.isReadOnly = !self.isUserInteractionEnabled
         }
     }
 
@@ -71,7 +71,7 @@ public final class TextFieldUIView: UITextField {
 
     internal init(viewModel: TextInputViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .init(origin: .zero, size: .init(width: 0, height: 44)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 0, height: TextInputConstants.height)))
         self.adjustsFontForContentSizeCategory = true
         self.adjustsFontSizeToFitWidth = false
         self.setupView()
@@ -149,17 +149,17 @@ public final class TextFieldUIView: UITextField {
             self.setCornerRadius(borderRadius * self.scaleFactor)
         }
 
-        self.viewModel.$leftSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] dim in
+        self.viewModel.$leftSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] leftSpacing in
             guard let self else { return }
             self.setNeedsLayout()
         }
 
-        self.viewModel.$rightSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] dim in
+        self.viewModel.$rightSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] rightSpacing in
             guard let self else { return }
             self.setNeedsLayout()
         }
 
-        self.viewModel.$contentSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] dim in
+        self.viewModel.$contentSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] contentSpacing in
             guard let self else { return }
             self.setNeedsLayout()
         }

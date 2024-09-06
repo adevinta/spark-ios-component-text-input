@@ -62,7 +62,7 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
             theme: theme,
             intent: intent
         )
-        viewModel.isUserInteractionEnabled = isReadOnly != true
+        viewModel.isReadOnly = isReadOnly
         self.init(
             titleKey: titleKey,
             text: text,

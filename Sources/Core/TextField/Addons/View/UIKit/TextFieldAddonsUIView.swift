@@ -80,7 +80,7 @@ public final class TextFieldAddonsUIView: UIControl {
         self.textField = TextFieldUIView(viewModel: viewModel.textFieldViewModel)
         self.leftAddon = nil
         self.rightAddon = nil
-        super.init(frame: .init(origin: .zero, size: .init(width: 0, height: 44)))
+        super.init(frame: .init(origin: .zero, size: .init(width: 0, height: TextInputConstants.height)))
         self.textField.backgroundColor = ColorTokenDefault.clear.uiColor
         self.setupViews()
         self.subscribeToViewModel()

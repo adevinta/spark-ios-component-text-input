@@ -1,5 +1,5 @@
 //
-//  TextViewAccessibiltyIdentifier.swift
+//  TextEditorAccessibiltyIdentifier.swift
 //  SparkEditor
 //
 //  Created by alican.aycil on 29.05.24.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// The textview identifiers for the textfield.
-public enum TextViewAccessibilityIdentifier {
+public enum TextEditorAccessibilityIdentifier {
 
     /// The textview accessibility identifier.
     public static let view = "spark-textview"
