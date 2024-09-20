@@ -10,12 +10,15 @@ import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
+// TODO: supprimer tous les scaleFactor
+
 struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     // MARK: - Properties
 
     @ScaledMetric private var height: CGFloat = TextInputConstants.height
-    @ScaledMetric private var scaleFactor: CGFloat = 1.0
+    @ScaledMetric private var borderWidth: CGFloat
+    @ScaledMetric private var borderRadius: CGFloat
 
     @ObservedObject private var viewModel: TextInputViewModel
     @Binding private var text: String
@@ -40,6 +43,9 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         self.type = type
         self.leftView = leftView
         self.rightView = rightView
+
+        self._borderWidth = .init(wrappedValue: viewModel.borderWidth ?? .zero)
+        self._borderRadius = .init(wrappedValue: viewModel.borderRadius ?? .zero)
     }
 
     // MARK: - View
@@ -52,8 +58,8 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
         .tint(self.viewModel.textColor.color)
         .allowsHitTesting(!self.viewModel.isReadOnly)
         .border(
-            width: self.viewModel.borderWidth * self.scaleFactor,
-            radius: self.viewModel.borderRadius * self.scaleFactor,
+            width: self.borderWidth,
+            radius: self.borderRadius,
             colorToken: self.viewModel.borderColor
         )
         .frame(height: self.height)

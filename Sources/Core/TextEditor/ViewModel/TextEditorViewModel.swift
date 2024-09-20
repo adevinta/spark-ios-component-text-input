@@ -9,12 +9,13 @@
 import Foundation
 import SparkTheming
 
+// sourcery: AutoPublisherTest, AutoViewModelStub
 final class TextEditorViewModel: TextInputViewModel {
 
     // MARK: - Published Properties
 
-    @Published private(set) var verticalSpacing: CGFloat = 0
     @Published private(set) var isPlaceholder: Bool = false
+    @Published private(set) var shouldUpdateVerticalSpacing: Int = 0
 
     // MARK: - Private Properties
 
@@ -30,8 +31,6 @@ final class TextEditorViewModel: TextInputViewModel {
         self.getVerticalSpacingUseCase = getVerticalSpacingUseCase
 
         super.init(theme: theme, intent: intent)
-
-        self.setVerticalSpacing()
     }
 
     // MARK: - Update
@@ -40,15 +39,24 @@ final class TextEditorViewModel: TextInputViewModel {
         self.isPlaceholder = text.isEmpty
     }
 
-    // MARK: - Setter
-
-    private func setVerticalSpacing() {
-        self.verticalSpacing = self.getVerticalSpacingUseCase.execute(font: self.font)
+    func traitCollectionChanged() {
+        self.shouldUpdateVerticalSpacing += 1
     }
+
+    // MARK: - Getter
+
+    func getVerticalSpacing(from height: CGFloat) -> CGFloat {
+        self.getVerticalSpacingUseCase.execute(
+            height: height,
+            font: self.font
+        )
+    }
+
+    // MARK: - Setter
 
     override func setFont() {
         super.setFont()
 
-        self.setVerticalSpacing()
+        self.shouldUpdateVerticalSpacing += 1
     }
 }

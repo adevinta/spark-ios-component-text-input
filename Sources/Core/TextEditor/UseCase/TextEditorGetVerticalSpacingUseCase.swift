@@ -8,19 +8,20 @@
 
 import Foundation
 import SparkTheming
+@_spi(SI_SPI) import SparkCommon
+import SwiftUI
 
-// TODO: test
-
-// sourcery: AutoMockable
+// sourcery: AutoMockable, AutoMockTest
 protocol TextEditorGetVerticalSpacingUseCaseable {
-    func execute(font: any TypographyFontToken) -> CGFloat
+    // sourcery: font = "Identical"
+    func execute(height: CGFloat, font: TypographyFontToken) -> CGFloat
 }
 
 final class TextEditorGetVerticalSpacingUseCase: TextEditorGetVerticalSpacingUseCaseable {
 
     // MARK: - Methods
 
-    func execute(font: any TypographyFontToken) -> CGFloat {
-        return (TextInputConstants.height - (font.uiFont.lineHeight)) / 2
+    func execute(height: CGFloat, font: any TypographyFontToken) -> CGFloat {
+        return (height - (font.uiFont.lineHeight)) / 2
     }
 }

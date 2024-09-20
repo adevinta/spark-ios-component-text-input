@@ -20,7 +20,9 @@ public final class TextFieldUIView: UITextField {
     private var cancellables = Set<AnyCancellable>()
 
     @ScaledUIMetric private var height: CGFloat = TextInputConstants.height
-    @ScaledUIMetric private var scaleFactor: CGFloat = 1.0
+
+    @ScaledUIMetric private var scaleCornerRadius: CGFloat = 0
+    @ScaledUIMetric private var scaleBorderWidth: CGFloat = 0
 
     private let defaultClearButtonRightSpacing = 5.0
 
@@ -139,27 +141,35 @@ public final class TextFieldUIView: UITextField {
             self.setPlaceholder(self.placeholder, foregroundColor: placeholderColor, font: self.viewModel.font)
         }
 
-        self.viewModel.$borderWidth.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] borderWidth in
+        self.viewModel.$borderWidth.subscribe(in: &self.cancellables) { [weak self] borderWidth in
             guard let self else { return }
-            self.setBorderWidth(borderWidth * self.scaleFactor)
+
+            self.scaleBorderWidth = borderWidth
+            self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+
+            self.setBorderWidth(self.scaleBorderWidth)
         }
 
-        self.viewModel.$borderRadius.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] borderRadius in
+        self.viewModel.$borderRadius.subscribe(in: &self.cancellables) { [weak self] borderRadius in
             guard let self else { return }
-            self.setCornerRadius(borderRadius * self.scaleFactor)
+
+            self.scaleCornerRadius = borderRadius
+            self._scaleCornerRadius.update(traitCollection: self.traitCollection)
+
+            self.setCornerRadius(self.scaleCornerRadius)
         }
 
-        self.viewModel.$leftSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] leftSpacing in
+        self.viewModel.$leftSpacing.subscribe(in: &self.cancellables) { [weak self] leftSpacing in
             guard let self else { return }
             self.setNeedsLayout()
         }
 
-        self.viewModel.$rightSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] rightSpacing in
+        self.viewModel.$rightSpacing.subscribe(in: &self.cancellables) { [weak self] rightSpacing in
             guard let self else { return }
             self.setNeedsLayout()
         }
 
-        self.viewModel.$contentSpacing.removeDuplicates().subscribe(in: &self.cancellables) { [weak self] contentSpacing in
+        self.viewModel.$contentSpacing.subscribe(in: &self.cancellables) { [weak self] contentSpacing in
             guard let self else { return }
             self.setNeedsLayout()
         }
@@ -277,9 +287,13 @@ public final class TextFieldUIView: UITextField {
         guard previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory else { return }
 
         self._height.update(traitCollection: self.traitCollection)
-        self._scaleFactor.update(traitCollection: self.traitCollection)
-        self.setCornerRadius(self.viewModel.borderRadius * self.scaleFactor)
-        self.setBorderWidth(self.viewModel.borderWidth * self.scaleFactor)
+
+        self._scaleCornerRadius.update(traitCollection: self.traitCollection)
+        self._scaleBorderWidth.update(traitCollection: self.traitCollection)
+
+        self.setCornerRadius(self.scaleCornerRadius)
+        self.setBorderWidth(self.scaleBorderWidth)
+
         self.invalidateIntrinsicContentSize()
     }
 
