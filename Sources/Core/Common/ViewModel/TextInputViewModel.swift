@@ -59,7 +59,7 @@ class TextInputViewModel: ObservableObject {
 
     var isFocused: Bool = false {
         didSet {
-            guard oldValue != self.isFocused else { return }
+            guard oldValue != self.isFocused && !self.isReadOnly else { return }
             self.setColors()
             self.setBorderLayout()
         }

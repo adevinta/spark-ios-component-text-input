@@ -11,8 +11,6 @@ import Combine
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
-// TODO: add scale on spacing, border radius & width
-
 /// A Spark TextField that can be surrounded by left and/or right addons
 public final class TextFieldAddonsUIView: UIControl {
 

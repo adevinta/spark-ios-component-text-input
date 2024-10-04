@@ -16,8 +16,7 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     // MARK: - Properties
 
     @ScaledMetric private var maxHeight: CGFloat = TextInputConstants.height
-    @ScaledMetric private var borderWidth: CGFloat
-    @ScaledMetric private var borderRadius: CGFloat
+    @ScaledMetric private var scaleFactor: CGFloat = 1.0
     @ObservedObject private var viewModel: TextFieldAddonsViewModel
     private let leftAddon: () -> TextFieldAddon<LeftAddon>
     private let rightAddon: () -> TextFieldAddon<RightAddon>
@@ -68,9 +67,6 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         self.leftAddon = leftAddon
         self.rightAddon = rightAddon
 
-        self._borderWidth = .init(wrappedValue: viewModel.borderWidth ?? .zero)
-        self._borderRadius = .init(wrappedValue: viewModel.borderRadius ?? .zero)
-
         self.viewModel.textFieldViewModel.isReadOnly = isReadOnly
     }
 
@@ -120,8 +116,8 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
         .frame(maxHeight: maxHeight)
         .allowsHitTesting(!self.viewModel.textFieldViewModel.isReadOnly)
         .border(
-            width: self.borderWidth,
-            radius: self.borderRadius,
+            width: self.viewModel.borderWidth * self.scaleFactor,
+            radius: self.viewModel.borderRadius * self.scaleFactor,
             colorToken: self.viewModel.textFieldViewModel.borderColor
         )
         .opacity(self.viewModel.dim)
@@ -158,7 +154,7 @@ public struct TextFieldAddons<LeftView: View, RightView: View, LeftAddon: View, 
     @ViewBuilder
     private func separator() -> some View {
         self.viewModel.textFieldViewModel.borderColor.color
-            .frame(width: self.borderWidth,
+            .frame(width: self.viewModel.borderWidth * self.scaleFactor,
                    height: maxHeight)
     }
 

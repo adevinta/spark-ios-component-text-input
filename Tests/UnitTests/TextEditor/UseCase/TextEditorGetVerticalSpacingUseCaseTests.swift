@@ -24,16 +24,19 @@ final class TextEditorGetVerticalSpacingUseCaseTests: XCTestCase {
         // GIVEN
         let useCase = TextEditorGetVerticalSpacingUseCase()
 
+        let height: CGFloat = 200
+
         let font = TypographyFontTokenGeneratedMock()
         font.uiFont = UIFont.systemFont(ofSize: 20)
 
         // WHEN
         let spacing = useCase.execute(
+            height: height,
             font: font
         )
 
         // THEN
-        let expectedSpacing = (TextInputConstants.height - font.uiFont.lineHeight) / 2
+        let expectedSpacing = (height - font.uiFont.lineHeight) / 2
         XCTAssertEqual(spacing, expectedSpacing)
     }
 }

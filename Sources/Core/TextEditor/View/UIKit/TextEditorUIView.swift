@@ -367,6 +367,24 @@ public final class TextEditorUIView: UITextView {
         return true
     }
 
+    // MARK: - Instrinsic Content Size
+
+//    public override var intrinsicContentSize: CGSize {
+//        guard self.textContainer.size.width > 0 && self.textContainer.size.height > 0 else {
+//            return super.intrinsicContentSize
+//        }
+//        let width = self.textContainer.size.width + self.textContainerInset.left + self.textContainerInset.right
+//        let height = self.textContainer.size.height + self.textContainerInset.top + self.textContainerInset.bottom
+//
+//
+//        print("LOGROB intrinsicContentSize \(self.contentSize) - \(self.textContainer.size) - \(self.textContainerInset) == \(width) / \(height)")
+//
+//        return .init(
+//            width: width,
+//            height: height
+//        )
+//    }
+
     // MARK: - Trait Collection
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
