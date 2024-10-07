@@ -58,7 +58,7 @@ public struct TextEditorView: View {
     }
 
     // MARK: - View
-    
+
     public var body: some View {
         VStack(alignment: .leading) {
             SwiftUI.TextField(

@@ -89,7 +89,6 @@ public final class TextEditorUIView: UITextView {
             self.viewModel.isReadOnly = !self.isEditable
         }
     }
-    
 
     // MARK: - Private Properties
 
