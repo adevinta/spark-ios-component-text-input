@@ -161,7 +161,7 @@ public final class TextFieldAddonsUIView: UIControl {
 
             self.scaleBorderWidth = borderWidth
             self._scaleBorderWidth.update(traitCollection: self.traitCollection)
-            
+
             self.setBorderWidthAndRefreshAddonsXCenter(self.scaleBorderWidth)
             self.setLeftSpacing(self.viewModel.leftSpacing, borderWidth: self.scaleBorderWidth)
             self.setRightSpacing(self.viewModel.rightSpacing, borderWidth: self.scaleBorderWidth)
@@ -289,7 +289,6 @@ public final class TextFieldAddonsUIView: UIControl {
         }
 
         guard previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory else { return }
-
 
         self._scaleCornerRadius.update(traitCollection: self.traitCollection)
         self._scaleBorderWidth.update(traitCollection: self.traitCollection)
