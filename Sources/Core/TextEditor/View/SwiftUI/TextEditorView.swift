@@ -60,22 +60,32 @@ public struct TextEditorView: View {
     // MARK: - View
 
     public var body: some View {
+
+        
+
+
+
         VStack(alignment: .leading) {
-            SwiftUI.TextField(
-                self.title,
-                text: self.$text,
-                axis: .vertical
-            )
+            ZStack {
+                if self.text.isEmpty {
+                    SwiftUI.TextEditor(text: .constant(self.title))
+                            .foregroundStyle(self.viewModel.placeholderColor.color)
+                            .disabled(true)
+                }
+                SwiftUI.TextEditor(text: self.$text)
+                    .foregroundStyle(self.viewModel.textColor.color)
+                    .tint(self.viewModel.textColor.color)
+                    .scrollIndicators(.visible)
+            }
             .font(self.viewModel.font.font)
-            .foregroundStyle(self.viewModel.textColor.color)
-            .tint(self.viewModel.textColor.color)
+            .padding(.zero)
             .scrollContentBackground(.hidden)
 
             Spacer(minLength: 0)
         }
-        .padding(.leading, self.viewModel.leftSpacing)
-        .padding(.trailing, self.viewModel.rightSpacing)
-        .verticalPadding(from: self.viewModel, height: self.minHeight)
+//        .padding(.leading, self.viewModel.leftSpacing)
+//        .padding(.trailing, self.viewModel.rightSpacing)
+//        .verticalPadding(from: self.viewModel, height: self.minHeight)
         .background(self.viewModel.backgroundColor.color)
         .border(
             width: self.viewModel.borderWidth * self.scaleFactor,

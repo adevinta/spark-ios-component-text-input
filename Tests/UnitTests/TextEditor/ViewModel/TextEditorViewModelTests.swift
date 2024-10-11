@@ -113,42 +113,6 @@ final class TextEditorViewModelTests: XCTestCase {
         )
     }
 
-    func test_traitCollectionChanged() {
-        // GIVEN
-        let stub = Stub()
-
-        stub.subscribePublishers(on: &self.subscriptions)
-        stub.resetMockedData()
-
-        // WHEN
-        stub.viewModel.traitCollectionChanged()
-
-        // THEN
-
-        // **
-        // Published properties
-
-        // Should Update Vertical Spacing
-        TextEditorViewModelPublisherTest.XCTAssert(
-            shouldUpdateVerticalSpacing: stub.shouldUpdateVerticalSpacingPublisherMock,
-            expectedNumberOfSinks: 1,
-            expectedValue: 1
-        )
-
-        // Is Placeholder
-        TextEditorViewModelPublisherTest.XCTSinksCount(
-            isPlaceholder: stub.isPlaceholderPublisherMock,
-            expectedNumberOfSinks: 0
-        )
-        // **
-
-        // Use Cases
-        TextEditorGetVerticalSpacingUseCaseableMockTest.XCTCallsCount(
-            stub.getVerticalSpacingUseCaseMock,
-            executeWithHeightAndFontNumberOfCalls: 0
-        )
-    }
-
     // MARK: - Setter
 
     func test_setFont() {

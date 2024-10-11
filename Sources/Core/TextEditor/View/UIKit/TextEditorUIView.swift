@@ -54,8 +54,8 @@ public final class TextEditorUIView: UITextView {
         }
         set {
             self.placeholderLabel.text = newValue
-            self.accessibilityLabel = self.placeholder
-            self.viewModel.contentChanged(with: self.text)
+//            self.accessibilityLabel = self.placeholder
+//            self.viewModel.contentChanged(with: self.text)
         }
     }
 
@@ -79,7 +79,11 @@ public final class TextEditorUIView: UITextView {
     public override var isUserInteractionEnabled: Bool {
         didSet {
             self.viewModel.isEnabled = self.isUserInteractionEnabled
-            self.accessibilityTraits
+            if !self.isUserInteractionEnabled {
+                self.accessibilityTraits.insert(.notEnabled)
+            } else {
+                self.accessibilityTraits.remove(.notEnabled)
+            }
         }
     }
 
@@ -187,11 +191,11 @@ public final class TextEditorUIView: UITextView {
 
         self.placeholderVerticalPaddingConstraints = [
             self.placeholderLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            self.placeholderLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.bottomAnchor)
+//            self.placeholderLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.bottomAnchor)
         ]
 
         self.placeholderWidthConstraint = self.placeholderLabel.widthAnchor.constraint(equalTo: self.widthAnchor)
-        self.placeholderCenterYAnchorConstraint = self.placeholderLabel.centerYAnchor.constraint(lessThanOrEqualTo: self.centerYAnchor)
+        self.placeholderCenterYAnchorConstraint = self.placeholderLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         self.placeholderCenterXAnchorConstraint = self.placeholderLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         let placeholderHorizontalConstraints = [
             self.placeholderWidthConstraint,
@@ -283,8 +287,6 @@ public final class TextEditorUIView: UITextView {
                 guard let self else { return }
 
                 self.placeholderLabel.isHidden = !isPlaceholder
-                self.placeholderCenterXAnchorConstraint?.isActive = isPlaceholder
-                self.placeholderCenterYAnchorConstraint?.isActive = isPlaceholder
             }
     }
 
@@ -330,6 +332,9 @@ public final class TextEditorUIView: UITextView {
             constraint.constant = verticalSpacing
         }
 
+        print("LOGROB Padding")
+
+        self.placeholderLabel.sizeToFit()
         self.placeholderLabel.updateConstraintsIfNeeded()
 
         // Container
@@ -367,6 +372,14 @@ public final class TextEditorUIView: UITextView {
         return true
     }
 
+    // MARK: - Layout Subview
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.updatePaddings()
+    }
+
     // MARK: - Trait Collection
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -389,8 +402,7 @@ public final class TextEditorUIView: UITextView {
 
         self.updateBorder()
 
-        self.viewModel.traitCollectionChanged()
-
         self.invalidateIntrinsicContentSize()
+        self.layoutIfNeeded()
     }
 }

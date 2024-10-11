@@ -30,17 +30,13 @@ final class TextEditorViewModel: TextInputViewModel {
     ) {
         self.getVerticalSpacingUseCase = getVerticalSpacingUseCase
 
-        super.init(theme: theme, intent: intent)
+        super.init(theme: theme, intent: intent, borderStyle: .roundedRect)
     }
 
     // MARK: - Update
 
     func contentChanged(with text: String) {
         self.isPlaceholder = text.isEmpty
-    }
-
-    func traitCollectionChanged() {
-        self.shouldUpdateVerticalSpacing += 1
     }
 
     // MARK: - Getter
