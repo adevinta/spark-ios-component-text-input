@@ -30,6 +30,23 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     init(titleKey: LocalizedStringKey,
          text: Binding<String>,
+         theme: Theme,
+         intent: TextFieldIntent,
+         borderStyle: TextInputBorderStyle,
+         type: TextFieldViewType,
+         isReadOnly: Bool,
+         leftView: @escaping (() -> LeftView),
+         rightView: @escaping (() -> RightView)) {
+        self.titleKey = titleKey
+        self._text = text
+        self.viewModel = .init(theme: theme, intent: intent, borderStyle: borderStyle)
+        self.type = type
+        self.leftView = leftView
+        self.rightView = rightView
+    }
+
+    init(titleKey: LocalizedStringKey,
+         text: Binding<String>,
          viewModel: TextInputViewModel,
          type: TextFieldViewType,
          leftView: @escaping (() -> LeftView),
@@ -93,11 +110,13 @@ struct TextFieldViewInternal<LeftView: View, RightView: View>: View {
 
     // MARK: - Update
 
-    func update(isEnabled: Bool, isFocused: Bool) -> some View {
-        DispatchQueue.main.async {
-            self.viewModel.isEnabled = isEnabled
-            self.viewModel.isFocused = isFocused
-        }
+    func isEnabled(_ isEnabled: Bool) -> Self {
+        self.viewModel.isEnabled = isEnabled
+        return self
+    }
+
+    func isFocused(_ isFocused: Bool) -> Self {
+        self.viewModel.isFocused = isFocused
         return self
     }
 }

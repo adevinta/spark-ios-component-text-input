@@ -17,7 +17,15 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     private let titleKey: LocalizedStringKey
     private let text: Binding<String>
     private let type: TextFieldViewType
-    private let viewModel: TextInputViewModel
+//    private let viewModel: TextInputViewModel
+
+
+    private let theme: Theme
+    private let intent: TextFieldIntent
+    private let borderStyle: TextInputBorderStyle
+    private let isReadOnly: Bool
+
+
     private let leftView: () -> LeftView
     private let rightView: () -> RightView
 
@@ -25,20 +33,20 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
     @FocusState private var isFocused: Bool
 
     // MARK: - Initialization
-
-    init(titleKey: LocalizedStringKey,
-         text: Binding<String>,
-         viewModel: TextInputViewModel,
-         type: TextFieldViewType,
-         leftView: @escaping (() -> LeftView),
-         rightView: @escaping (() -> RightView)) {
-        self.titleKey = titleKey
-        self.text = text
-        self.viewModel = viewModel
-        self.type = type
-        self.leftView = leftView
-        self.rightView = rightView
-    }
+//
+//    init(titleKey: LocalizedStringKey,
+//         text: Binding<String>,
+//         viewModel: TextInputViewModel,
+//         type: TextFieldViewType,
+//         leftView: @escaping (() -> LeftView),
+//         rightView: @escaping (() -> RightView)) {
+//        self.titleKey = titleKey
+//        self.text = text
+////        self.viewModel = viewModel
+//        self.type = type
+//        self.leftView = leftView
+//        self.rightView = rightView
+//    }
 
     init(
         _ titleKey: LocalizedStringKey,
@@ -51,20 +59,36 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
         leftView: @escaping (() -> LeftView),
         rightView: @escaping (() -> RightView)
     ) {
-        let viewModel = TextInputViewModel(
-            theme: theme,
-            intent: intent,
-            borderStyle: borderStyle
-        )
-        viewModel.isReadOnly = isReadOnly
-        self.init(
-            titleKey: titleKey,
-            text: text,
-            viewModel: viewModel,
-            type: type,
-            leftView: leftView,
-            rightView: rightView
-        )
+//        let viewModel = TextInputViewModel(
+//            theme: theme,
+//            intent: intent,
+//            borderStyle: borderStyle
+//        )
+//        viewModel.isReadOnly = isReadOnly
+//        self.init(
+//            titleKey: titleKey,
+//            text: text,
+//            viewModel: viewModel,
+//            type: type,
+//            leftView: leftView,
+//            rightView: rightView
+//        )
+
+
+       self.titleKey = titleKey
+       self.text = text
+//        self.viewModel = viewModel
+
+
+        self.theme = theme
+        self.intent = intent
+        self.borderStyle = borderStyle
+        self.isReadOnly = isReadOnly
+
+
+       self.type = type
+       self.leftView = leftView
+       self.rightView = rightView
     }
 
     /// TextFieldView initializer
@@ -104,16 +128,16 @@ public struct TextFieldView<LeftView: View, RightView: View>: View {
         TextFieldViewInternal(
             titleKey: self.titleKey,
             text: self.text,
-            viewModel: self.viewModel,
+            theme: self.theme,
+            intent: self.intent,
+            borderStyle: self.borderStyle,
             type: self.type,
+            isReadOnly: self.isReadOnly,
             leftView: self.leftView,
             rightView: self.rightView
         )
-        .update(
-            isEnabled: self.isEnabled,
-            isFocused: self.isFocused
-        )
-        .focused($isFocused)
+        .isEnabled(self.isEnabled)
+        .isFocused(self.isFocused)
+        .focused(self.$isFocused)
     }
-
 }
