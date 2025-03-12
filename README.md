@@ -16,7 +16,7 @@ At most you could have
 
 The TextField specifications on Zeroheight are [here](https://zeroheight.com/1186e1705/v/latest/p/773c60-input--text-field).
 
-![Figma anatomy](https://github.com/adevinta/spark-ios-component-text-input/blob/main/.github/assets/anatomy-textfield.png)
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-text-input/blob/main/.github/assets/anatomy-textfield.png)
 
 ## UIKit
 
@@ -156,7 +156,7 @@ A text area lets users enter long form text which spans over multiple lines.
 
 The TextEditor specifications on Zeroheight is [here](https://spark.adevinta.com/1186e1705/p/365c2e-text-area--text-view).
 
-![Figma anatomy](https://github.com/adevinta/spark-ios-component-text-input/blob/main/.github/assets/anatomy-texteditor.png)
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-text-input/blob/main/.github/assets/anatomy-texteditor.png)
 
 ## Usage
 
@@ -170,14 +170,14 @@ TextEditor is available both in UIKit and SwiftUI.
 
 Parameters:
 
-- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
+- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/leboncoin/spark-ios/wiki/Theming#your-own-theming)
 - `intent`: The intent of the TextEditor, e.g. neutral, success
 
 **Note**: You can use TextEditor with Formfield to support title, helper message and counter.
 
 #### Published Properties
 
-- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
+- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/leboncoin/spark-ios/wiki/Theming#your-own-theming)
 - `intent`: The intent of the TextEditor, e.g. neutral, success
 - `text`: The text of the TextEditor, it is native textview's text property.
 - `attributedText`: The attributedText of the TextEditor, it is native textview's attributedText property.
@@ -212,7 +212,7 @@ self.textEditor.heightAnchor.constraint(greaterThanOrEqualTo: 70).isActive = tru
 
 Parameters:
 
-- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
+- `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/leboncoin/spark-ios/wiki/Theming#your-own-theming)
 - `intent`: The intent of the TextEditor, e.g. neutral, success
 - `text`: The text of the TextEditor.
 - `title`: The placeholder of the TextEditor.
@@ -245,7 +245,7 @@ Parameters:
 ```
 MIT License
 
-Copyright (c) 2024 Adevinta
+Copyright (c) 2024 Leboncoin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
